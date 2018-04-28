@@ -3,9 +3,11 @@ package com.youzi.balance.job;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.youzi.balance.base.mapper.impl.PayMapper;
 import com.youzi.balance.base.mapper.impl.SystemMapper;
+import com.youzi.balance.base.mapper.impl.SystemTotalMonthMapper;
 import com.youzi.balance.base.mapper.impl.SystemTotalWeekMapper;
 import com.youzi.balance.base.po.PayPo;
 import com.youzi.balance.base.po.SystemPo;
+import com.youzi.balance.base.po.SystemTotalMonthPo;
 import com.youzi.balance.base.po.SystemTotalWeekPo;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -38,6 +40,9 @@ public class SyncDataJob {
 
     @Autowired
     private SystemTotalWeekMapper systemTotalWeekMapper;
+
+    @Autowired
+    private SystemTotalMonthMapper systemTotalMonthMapper;
 
 
     @EventListener
@@ -85,23 +90,85 @@ public class SyncDataJob {
             });
 
             payPos.forEach(payPo -> {
-                payMapper.insert(payPo);
+                try {
+                    PayPo queryPo = new PayPo();
+                    queryPo.setSystemId(systemPo.getId());
+                    queryPo.setPayId(payPo.getPayId());
+                    Integer count = payMapper.queryCount(queryPo);
+                    if(count == 0) {
+                        payMapper.insert(payPo);
+                    }
+                }catch (Exception e){
+                    log.error("",e);
+                }
             });
+            doCalWeek(systemPo.getId());
+            doCalMonth(systemPo.getId());
         });
     }
 
     private void doCalWeek(Integer systemId){
         DateTime dateTime = new DateTime();
         Integer week = dateTime.weekOfWeekyear().get();
-
+        DateTime start = dateTime.withDayOfWeek(1).withTime(0,0,0,0);
+        DateTime end = start.plusWeeks(1);
         SystemTotalWeekPo queryPo = new SystemTotalWeekPo();
         queryPo.setSystemId(systemId);
         queryPo.setWeek(week);
         Integer count = systemTotalWeekMapper.queryCount(queryPo);
+        Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
 
         if(count == 0){
             //
+            SystemTotalWeekPo systemTotalWeekPo = new SystemTotalWeekPo();
+            systemTotalWeekPo.setWeek(week);
+            systemTotalWeekPo.setMoney(money);
+            systemTotalWeekPo.setSystemId(systemId);
+            systemTotalWeekPo.setYear(String.valueOf(dateTime.getYear()));
+            systemTotalWeekMapper.insert(systemTotalWeekPo);
+
+        }else{
+            SystemTotalWeekPo updatePo = new SystemTotalWeekPo();
+            updatePo.setSystemId(systemId);
+            updatePo.setWeek(week);
+            updatePo.setMoney(money);
+            systemTotalWeekMapper.update(updatePo);
         }
+    }
+
+    private void doCalMonth(Integer systemId){
+        DateTime dateTime = new DateTime();
+        Integer month = dateTime.monthOfYear().get();
+        DateTime start = dateTime.withDayOfMonth(1).withTime(0,0,0,0);
+        DateTime end = start.plusMonths(1);
+        SystemTotalMonthPo queryPo = new SystemTotalMonthPo();
+        queryPo.setSystemId(systemId);
+        queryPo.setMonth(month);
+        Integer count = systemTotalMonthMapper.queryCount(queryPo);
+        Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
+
+        if(count == 0){
+            //
+            SystemTotalMonthPo insertPo = new SystemTotalMonthPo();
+            insertPo.setMonth(month);
+            insertPo.setMoney(money);
+            insertPo.setSystemId(systemId);
+            insertPo.setYear(String.valueOf(dateTime.getYear()));
+            systemTotalMonthMapper.insert(insertPo);
+
+        }else{
+            SystemTotalMonthPo updatePo = new SystemTotalMonthPo();
+            updatePo.setSystemId(systemId);
+            updatePo.setMonth(month);
+            updatePo.setMoney(money);
+            systemTotalMonthMapper.update(updatePo);
+        }
+    }
+
+    public static void main(String[] args) {
+        DateTime dateTime = new DateTime();
+        System.out.println("args = [" + dateTime.withDayOfWeek(1).withTime(0,0,0,0).getMillis() + "]");
+
     }
 
 }

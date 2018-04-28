@@ -33,6 +33,12 @@
         )
     </insert>
 
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(1) from t_pay where payId = #{payId} and
+        systemId = #{systemId}
+    </select>
+
+
     <select id = "sumMoney" resultType="java.lang.Integer">
         select sum(money) from <include refid="tableName" />
 
