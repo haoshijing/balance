@@ -10,4 +10,8 @@ public interface BaseMapper<T> {
     int insert(T bean);
 
     List<T> selectAll();
+
+    int update(T bean);
+
+    int queryCount(T bean);
 }

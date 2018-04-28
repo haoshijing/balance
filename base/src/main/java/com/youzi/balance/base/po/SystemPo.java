@@ -10,7 +10,7 @@ import lombok.Data;
 public class SystemPo {
     private Integer id;
     private String name;
-    private String dbIp;
+    private String dbHost;
     private String dbName;
     private String dbUserName;
     private String dbPassword;

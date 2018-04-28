@@ -9,9 +9,12 @@ import lombok.Data;
 @Data
 public class PayPo {
     private Integer id;
+    private Integer payId;
     private Integer systemId;
     private Integer money;
     private Long insertTime;
     private Long payTime;
     private Long syncTime;
+    private String payType;
+
 }

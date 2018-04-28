@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youzi.balance.base.mapper.impl.PayMapper">
+    <sql id="all_columns">
+        *
+    </sql>
+    <sql id = "tableName">
+        t_pay
+    </sql>
+
+    <insert id="insert" parameterType="com.youzi.balance.base.po.PayPo">
+        insert into <include refid="tableName" />
+        (
+          payId,
+          systemId,
+          money,
+          insertTime,
+          payTime,
+          syncTime,
+          payType
+        )
+        VALUES
+        (
+        #{payId},
+        #{systemId},
+        #{money},
+        #{insertTime},
+        #{payTime},
+        #{syncTime},
+        #{payType}
+
+        )
+    </insert>
+
+    <select id = "sumMoney" resultType="java.lang.Integer">
+        select sum(money) from <include refid="tableName" />
+
+        where payTime BETWEEN #{start} AND  #{end}
+        and systemId = #{systemId}
+     </select>
+</mapper>
