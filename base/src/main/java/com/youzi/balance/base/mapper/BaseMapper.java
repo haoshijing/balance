@@ -20,7 +20,9 @@ public interface BaseMapper<T> {
 
     int queryCount(T bean);
 
-    List<T> selectList(@Param("param") T bean, @Param("limit") Integer limit, @Param("offset")Integer offset);
+    List<T> selectList(@Param("param") T bean,
+                       @Param("limit") Integer limit,
+                       @Param("offset")Integer offset);
 
     Integer selectCount(@Param("param")T bean);
 }

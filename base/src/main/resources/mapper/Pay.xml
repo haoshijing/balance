@@ -46,13 +46,20 @@
         and systemId = #{systemId}
      </select>
 
-    <select id="selectList" resultType="com.youzi.balance.base.po.PayPo">
+    <select id="selectPageList" resultType="com.youzi.balance.base.po.query.QueryPayPo">
         select * from <include refid="tableName"/>
 
         <where>
             1 =1
-            <if test = "param.systemId != null">
-                AND systemId = #{param.systemId}
+            <if test = "systemId != null">
+                AND systemId = #{systemId}
+            </if>
+
+            <if test = "start != null">
+                and payTime >= #{start}
+            </if>
+            <if test = "end != null">
+                AND end <![CDATA[ <= ]]> #{end}
             </if>
             order by id desc
             limit #{limit} offset #{offset}
@@ -60,12 +67,19 @@
     </select>
 
 
-    <select id="selectCount" resultType="java.lang.Integer">
+    <select id="selectPageCount"  parameterType="com.youzi.balance.base.po.query.QueryPayPo" resultType="java.lang.Integer">
         select count(1)  from <include refid="tableName"/>
-
         <where>
-            <if test = "param.systemId != null">
-                AND systemId = #{param.systemId}
+            1 =1
+            <if test = "systemId != null">
+                AND systemId = #{systemId}
+            </if>
+
+            <if test = "start != null">
+                and payTime >= #{start}
+            </if>
+            <if test = "end != null">
+                AND end <![CDATA[ <= ]]> #{end}
             </if>
 
         </where>

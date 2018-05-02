@@ -5,6 +5,7 @@ import com.youzi.balance.base.mapper.impl.PayMapper;
 import com.youzi.balance.base.mapper.impl.SystemMapper;
 import com.youzi.balance.base.po.PayPo;
 import com.youzi.balance.base.po.SystemPo;
+import com.youzi.balance.base.po.query.QueryPayPo;
 import com.yoyzi.balance.controller.request.PayQueryRequest;
 import com.yoyzi.balance.vo.PayVo;
 import org.joda.time.DateTime;
@@ -35,10 +36,17 @@ public class PayService {
 
         PayPo queryPo = new PayPo();
         queryPo.setSystemId(systemId);
-
+        Long start = payQueryRequest.getStart();
+        Long end = payQueryRequest.getEnd();
+        QueryPayPo queryPayPo = new QueryPayPo();
+        queryPayPo.setStart(start);
+        queryPayPo.setLimit(limit);
+        queryPayPo.setEnd(end);
+        queryPayPo.setOffset(offset);
+        queryPayPo.setSystemId(systemId);
         Map<Integer,String> systemMap = Maps.newHashMap();
 
-        List<PayVo> payVos = payMapper.selectList(queryPo,limit,offset).stream().map(
+        List<PayVo> payVos = payMapper.selectPageList(queryPayPo).stream().map(
                 payPo -> {
                     PayVo payVo = new PayVo();
                     payVo.setPayType(payPo.getPayType());
@@ -60,12 +68,16 @@ public class PayService {
     }
 
     public Integer selectCount(PayQueryRequest request){
-        PayPo queryPo = new PayPo();
         Integer systemId = request.getSystemId();
 
-        queryPo.setSystemId(systemId);
 
-        return payMapper.selectCount(queryPo);
+        Long start = request.getStart();
+        Long end = request.getEnd();
+        QueryPayPo queryPayPo = new QueryPayPo();
+        queryPayPo.setStart(start);
+        queryPayPo.setEnd(end);
+        queryPayPo.setSystemId(systemId);
+        return payMapper.selectPageCount(queryPayPo);
 
     }
 }
