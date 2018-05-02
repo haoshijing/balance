@@ -50,6 +50,7 @@
         select * from <include refid="tableName"/>
 
         <where>
+            1 =1
             <if test = "param.systemId != null">
                 AND systemId = #{param.systemId}
             </if>

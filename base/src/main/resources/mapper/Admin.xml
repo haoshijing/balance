@@ -9,4 +9,14 @@
         t_admin
     </sql>
 
+    <select id="selectByUsername" resultType="com.youzi.balance.base.po.AdminPo" parameterType="java.lang.String">
+        <!-- 具体的sql -->
+        SELECT <include refid="all_columns"/> FROM
+        <include refid="tableName"/>
+        WHERE userName = #{userName}
+    </select>
+    <update id="updatePwd">
+        update t_admin set password = #{newPwd} where userName = #{userName}
+    </update>
+
 </mapper>

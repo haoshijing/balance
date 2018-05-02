@@ -2,6 +2,7 @@ package com.yoyzi.balance.controller;
 
 
 import com.youzi.balance.base.ApiResponse;
+import com.youzi.balance.base.po.SystemPo;
 import com.yoyzi.balance.controller.request.PayQueryRequest;
 import com.yoyzi.balance.controller.request.SystemUpdatePo;
 import com.yoyzi.balance.service.PayService;
@@ -24,5 +25,10 @@ public class SystemController {
     public ApiResponse<Boolean> addOrUpdate(@RequestBody SystemUpdatePo systemUpdatePo){
         boolean ret = systemService.addOrUpdateSystem(systemUpdatePo);
         return new ApiResponse<>(ret);
+    }
+
+    @RequestMapping("/getAll")
+    public  List<SystemPo> getAll(){
+       return systemService.getAll();
     }
 }

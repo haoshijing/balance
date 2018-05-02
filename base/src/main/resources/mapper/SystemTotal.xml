@@ -13,8 +13,8 @@
         SELECT count(1) FROM
         <include refid="tableName"/>
         where systemId = #{systemId}
-        and index = #{index}
-        and type = #{type}
+        and indexAt = #{indexAt}
+        and typeVal = #{typeVal}
 
     </select>
 
@@ -24,25 +24,25 @@
         (
         systemId,
         money,
-        index,
-        type,
-        year
+        indexAt,
+        typeVal,
+        yearStr
         )
         VALUES
         (
         #{systemId},
         #{money},
-        #{index},
-        #{type},
-        #{year}
+        #{indexAt},
+        #{typeVal},
+        #{yearStr}
         )
     </insert>
 
     <update id="update" parameterType="com.youzi.balance.base.po.SystemTotalPo">
         update <include refid="tableName"/>
         set money = #{money} where systemId = #{systemId}
-        and index = #{index}
-        and type = #{type}
+        and indexAt = #{index}
+        and typeVal = #{typeVal}
     </update>
 
 

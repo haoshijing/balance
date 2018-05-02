@@ -9,6 +9,8 @@ import com.yoyzi.balance.controller.request.SystemUpdatePo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class SystemService {
 
@@ -52,5 +54,9 @@ public class SystemService {
         }
         return ret >0;
 
+    }
+
+    public List<SystemPo> getAll() {
+        return systemMapper.selectAll();
     }
 }

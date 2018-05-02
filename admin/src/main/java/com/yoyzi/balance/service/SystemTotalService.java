@@ -25,8 +25,8 @@ public class SystemTotalService {
 
     public List<SystemTotalVo> selectList(TotalQueryRequest request){
         SystemTotalPo systemTotalPo = new SystemTotalPo();
-        systemTotalPo.setType(request.getType());
-        systemTotalPo.setIndex(request.getIndex());
+        systemTotalPo.setTypeVal(request.getType());
+        systemTotalPo.setIndexAt(request.getIndex());
         systemTotalPo.setSystemId(request.getSystemId());
 
         Integer limit = request.getLimit();
@@ -38,7 +38,7 @@ public class SystemTotalService {
         return systemTotalPos.stream().map(systemTotalPo1 -> {
             SystemTotalVo systemTotalVo = new SystemTotalVo();
             systemTotalVo.setId(systemTotalPo1.getId());
-            systemTotalVo.setIndex(systemTotalPo1.getIndex());
+            systemTotalVo.setIndex(systemTotalPo1.getIndexAt());
             if(!systemMap.containsKey(systemTotalPo1.getSystemId())){
                 SystemPo systemPo = systemMapper.findById(systemTotalPo1.getSystemId());
                 if(systemPo != null){
@@ -46,7 +46,7 @@ public class SystemTotalService {
                 }
             };
             systemTotalVo.setSystemName(systemMap.get(systemTotalPo1.getSystemId()));
-            systemTotalVo.setYear(systemTotalPo1.getYear());
+            systemTotalVo.setYear(systemTotalPo1.getYearStr());
             systemTotalVo.setMoney(systemTotalPo1.getMoney()/100+"元");
             return systemTotalVo;
         }).collect(Collectors.toList());
@@ -54,8 +54,8 @@ public class SystemTotalService {
 
     public Integer selectCount(TotalQueryRequest request){
         SystemTotalPo systemTotalPo = new SystemTotalPo();
-        systemTotalPo.setType(request.getType());
-        systemTotalPo.setIndex(request.getIndex());
+        systemTotalPo.setTypeVal(request.getType());
+        systemTotalPo.setIndexAt(request.getIndex());
         systemTotalPo.setSystemId(request.getSystemId());
         return systemTotalMapper.selectCount(systemTotalPo);
     }

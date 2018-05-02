@@ -7,7 +7,6 @@ import com.youzi.balance.base.mapper.impl.SystemTotalMapper;
 import com.youzi.balance.base.po.PayPo;
 import com.youzi.balance.base.po.SystemPo;
 import com.youzi.balance.base.po.SystemTotalPo;
-import com.youzi.balance.base.po.SystemTotalWeekPo;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,26 +120,26 @@ public class SyncDataJob {
     private void doCal(DateTime start,DateTime end,Integer systemId,Integer type,Integer index){
         SystemTotalPo queryPo = new SystemTotalPo();
         queryPo.setSystemId(systemId);
-        queryPo.setIndex(index);
-        queryPo.setType(1);
+        queryPo.setIndexAt(index);
+        queryPo.setTypeVal(1);
         Integer count = systemTotalMapper.queryCount(queryPo);
         Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
 
         if(count == 0){
             //
             SystemTotalPo systemPo = new SystemTotalPo();
-            systemPo.setIndex(index);
+            systemPo.setIndexAt(index);
             systemPo.setMoney(money);
-            systemPo.setType(type);
+            systemPo.setTypeVal(type);
             systemPo.setSystemId(systemId);
-            systemPo.setYear(String.valueOf(start.getYear()));
+            systemPo.setYearStr(String.valueOf(start.getYear()));
             systemTotalMapper.insert(systemPo);
 
         }else{
             SystemTotalPo updatePo = new SystemTotalPo();
             updatePo.setSystemId(systemId);
-            updatePo.setIndex(index);
-            updatePo.setType(type);
+            updatePo.setIndexAt(index);
+            updatePo.setTypeVal(type);
             updatePo.setMoney(money);
             systemTotalMapper.update(updatePo);
         }

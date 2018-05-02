@@ -19,4 +19,8 @@ public class ApiResponse<T> {
         this.msg = "succ";
         this.data = data;
     }
+
+    public static ApiResponse responseError(Exception e) {
+        return new ApiResponse(500, e.getMessage(), null);
+    }
 }

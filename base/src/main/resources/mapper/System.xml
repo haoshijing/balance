@@ -60,4 +60,5 @@
             WHERE  id = #{id}
         </set>
     </update>
+
 </mapper>
