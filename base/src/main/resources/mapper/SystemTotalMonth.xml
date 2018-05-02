@@ -5,10 +5,10 @@
     <sql id="all_columns">
         *
     </sql>
-    <sql id = "tableName">
+    <sql id="tableName">
         t_system_total_month
     </sql>
-    <select id="queryCount" resultType="java.lang.Integer" >
+    <select id="queryCount" resultType="java.lang.Integer">
         <!-- 具体的sql -->
         SELECT count(1) FROM
         <include refid="tableName"/>
@@ -19,7 +19,8 @@
 
 
     <insert id="insert" parameterType="com.youzi.balance.base.po.SystemTotalMonthPo">
-        insert into <include refid="tableName" />
+        insert into
+        <include refid="tableName"/>
         (
         systemId,
         money,
@@ -36,7 +37,8 @@
     </insert>
 
     <update id="update" parameterType="com.youzi.balance.base.po.SystemTotalMonthPo">
-        update <include refid="tableName"/>
+        update
+        <include refid="tableName"/>
         set money = #{money} where systemId = #{systemId}
         and month = #{month}
     </update>

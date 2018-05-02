@@ -5,20 +5,21 @@
     <sql id="all_columns">
         *
     </sql>
-    <sql id = "tableName">
+    <sql id="tableName">
         t_pay
     </sql>
 
     <insert id="insert" parameterType="com.youzi.balance.base.po.PayPo">
-        insert into <include refid="tableName" />
+        insert into
+        <include refid="tableName"/>
         (
-          payId,
-          systemId,
-          money,
-          insertTime,
-          payTime,
-          syncTime,
-          payType
+        payId,
+        systemId,
+        money,
+        insertTime,
+        payTime,
+        syncTime,
+        payType
         )
         VALUES
         (
@@ -39,10 +40,11 @@
     </select>
 
 
-    <select id = "sumMoney" resultType="java.lang.Integer">
-        select sum(money) from <include refid="tableName" />
+    <select id="sumMoney" resultType="java.lang.Integer">
+        select sum(money) from
+        <include refid="tableName"/>
 
-        where payTime BETWEEN #{start} AND  #{end}
+        where payTime BETWEEN #{start} AND #{end}
         and systemId = #{systemId}
-     </select>
+    </select>
 </mapper>
