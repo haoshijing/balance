@@ -59,7 +59,7 @@
                 and payTime >= #{start}
             </if>
             <if test = "end != null">
-                AND end <![CDATA[ <= ]]> #{end}
+                AND payTime <![CDATA[ <= ]]> #{end}
             </if>
             order by id desc
             limit #{limit} offset #{offset}
@@ -79,7 +79,7 @@
                 and payTime >= #{start}
             </if>
             <if test = "end != null">
-                AND end <![CDATA[ <= ]]> #{end}
+                AND payTime <![CDATA[ <= ]]> #{end}
             </if>
 
         </where>
