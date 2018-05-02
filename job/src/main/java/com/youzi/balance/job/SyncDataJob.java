@@ -3,11 +3,10 @@ package com.youzi.balance.job;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.youzi.balance.base.mapper.impl.PayMapper;
 import com.youzi.balance.base.mapper.impl.SystemMapper;
-import com.youzi.balance.base.mapper.impl.SystemTotalMonthMapper;
-import com.youzi.balance.base.mapper.impl.SystemTotalWeekMapper;
+import com.youzi.balance.base.mapper.impl.SystemTotalMapper;
 import com.youzi.balance.base.po.PayPo;
 import com.youzi.balance.base.po.SystemPo;
-import com.youzi.balance.base.po.SystemTotalMonthPo;
+import com.youzi.balance.base.po.SystemTotalPo;
 import com.youzi.balance.base.po.SystemTotalWeekPo;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -15,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -39,10 +36,7 @@ public class SyncDataJob {
     private PayMapper payMapper;
 
     @Autowired
-    private SystemTotalWeekMapper systemTotalWeekMapper;
-
-    @Autowired
-    private SystemTotalMonthMapper systemTotalMonthMapper;
+    private SystemTotalMapper systemTotalMapper;
 
 
     @EventListener
@@ -112,28 +106,7 @@ public class SyncDataJob {
         Integer week = dateTime.weekOfWeekyear().get();
         DateTime start = dateTime.withDayOfWeek(1).withTime(0,0,0,0);
         DateTime end = start.plusWeeks(1);
-        SystemTotalWeekPo queryPo = new SystemTotalWeekPo();
-        queryPo.setSystemId(systemId);
-        queryPo.setWeek(week);
-        Integer count = systemTotalWeekMapper.queryCount(queryPo);
-        Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
-
-        if(count == 0){
-            //
-            SystemTotalWeekPo systemTotalWeekPo = new SystemTotalWeekPo();
-            systemTotalWeekPo.setWeek(week);
-            systemTotalWeekPo.setMoney(money);
-            systemTotalWeekPo.setSystemId(systemId);
-            systemTotalWeekPo.setYear(String.valueOf(dateTime.getYear()));
-            systemTotalWeekMapper.insert(systemTotalWeekPo);
-
-        }else{
-            SystemTotalWeekPo updatePo = new SystemTotalWeekPo();
-            updatePo.setSystemId(systemId);
-            updatePo.setWeek(week);
-            updatePo.setMoney(money);
-            systemTotalWeekMapper.update(updatePo);
-        }
+        doCal(start,end,systemId,week,1);
     }
 
     private void doCalMonth(Integer systemId){
@@ -141,27 +114,35 @@ public class SyncDataJob {
         Integer month = dateTime.monthOfYear().get();
         DateTime start = dateTime.withDayOfMonth(1).withTime(0,0,0,0);
         DateTime end = start.plusMonths(1);
-        SystemTotalMonthPo queryPo = new SystemTotalMonthPo();
+        doCal(start,end,systemId,month,2);
+
+    }
+
+    private void doCal(DateTime start,DateTime end,Integer systemId,Integer type,Integer index){
+        SystemTotalPo queryPo = new SystemTotalPo();
         queryPo.setSystemId(systemId);
-        queryPo.setMonth(month);
-        Integer count = systemTotalMonthMapper.queryCount(queryPo);
+        queryPo.setIndex(index);
+        queryPo.setType(1);
+        Integer count = systemTotalMapper.queryCount(queryPo);
         Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
 
         if(count == 0){
             //
-            SystemTotalMonthPo insertPo = new SystemTotalMonthPo();
-            insertPo.setMonth(month);
-            insertPo.setMoney(money);
-            insertPo.setSystemId(systemId);
-            insertPo.setYear(String.valueOf(dateTime.getYear()));
-            systemTotalMonthMapper.insert(insertPo);
+            SystemTotalPo systemPo = new SystemTotalPo();
+            systemPo.setIndex(index);
+            systemPo.setMoney(money);
+            systemPo.setType(type);
+            systemPo.setSystemId(systemId);
+            systemPo.setYear(String.valueOf(start.getYear()));
+            systemTotalMapper.insert(systemPo);
 
         }else{
-            SystemTotalMonthPo updatePo = new SystemTotalMonthPo();
+            SystemTotalPo updatePo = new SystemTotalPo();
             updatePo.setSystemId(systemId);
-            updatePo.setMonth(month);
+            updatePo.setIndex(index);
+            updatePo.setType(type);
             updatePo.setMoney(money);
-            systemTotalMonthMapper.update(updatePo);
+            systemTotalMapper.update(updatePo);
         }
     }
 

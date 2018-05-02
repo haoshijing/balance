@@ -15,4 +15,49 @@
 
     </select>
 
+    <select id="findById" resultType="com.youzi.balance.base.po.SystemPo">
+        select * from <include refid="tableName"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.youzi.balance.base.po.SystemPo">
+        insert into <include refid="tableName" />
+        (
+        name,
+        dbName,
+        dbHost,
+        dbUserName,
+        dbPassword
+        )
+        VALUES
+        (
+        #{name},
+        #{dbName},
+        #{dbHost},
+        #{dbUserName},
+        #{dbPassword}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.youzi.balance.base.po.SystemPo">
+        update  <include refid="tableName" />
+        <set>
+            <if test=" name != null and name != ''">
+               name = #{name},
+            </if>
+            <if test=" dbName != null and dbName != ''">
+                dbName = #{dbName},
+            </if>
+            <if test=" dbHost != null and dbHost != ''">
+                dbHost = #{dbHost},
+            </if>
+            <if test=" dbUserName != null and dbUserName != ''">
+                dbUserName = #{dbUserName},
+            </if>
+            <if test=" dbPassword != null and dbPassword != ''">
+                dbPassword = #{dbPassword},
+            </if>
+            WHERE  id = #{id}
+        </set>
+    </update>
 </mapper>

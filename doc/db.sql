@@ -22,14 +22,15 @@ create table t_system(
 
 );
 
-drop TABLE IF EXISTS t_system_total_week;
-create table t_system_total_week(
+drop TABLE IF EXISTS t_system_total;
+create table t_system_total(
   id int primary key auto_increment comment '自动生成的主键id',
   systemId int comment '业务系统id',
-  week int comment '所在周',
+  index int comment '所在周',
   year varchar(20) comment '年份',
   money int comment '钱数',
-  index idx_systemId_week(systemId,week)
+  type int comment '类别',
+  index idx_systemId_index_type(systemId,index,type)
 );
 
 drop TABLE IF EXISTS t_system_total_month;
