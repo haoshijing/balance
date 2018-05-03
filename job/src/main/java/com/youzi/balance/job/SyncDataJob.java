@@ -39,7 +39,7 @@ public class SyncDataJob {
     private SystemTotalMapper systemTotalMapper;
 
 
-    @Scheduled(cron = "0 0 11 * * ?")
+    @Scheduled(cron = "0 0/25 * * * ?")
     public void sync() {
         try {
             log.info("开始同步");

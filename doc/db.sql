@@ -1,3 +1,6 @@
+CREATE DATABASE balance DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+use balance;
+
 drop TABLE IF EXISTS t_pay;
 create table t_pay(
   id int primary key auto_increment comment '自动生成的主键id',
