@@ -7,15 +7,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 
-@EnableAutoConfiguration
+@SpringBootApplication
 @ImportResource({"classpath:application-context.xml"})
-public class ApplicationStartLauncher extends SpringBootServletInitializer {
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(ApplicationStartLauncher.class);
-    }
-
+public class AdminApplicationStarter {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(ApplicationStartLauncher.class).web(true).run(args);
+        SpringApplication.run(AdminApplicationStarter.class, args).start();
     }
 }

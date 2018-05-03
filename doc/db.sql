@@ -33,17 +33,7 @@ create table t_system_total(
   yearStr varchar(20) comment '年份',
   money int comment '钱数',
   typeVal int comment '类别',
-  index idx_systemId_index_type(systemId,indexAt,type)
-);
-
-drop TABLE IF EXISTS t_system_total_month;
-create table t_system_total_month(
-  id int primary key auto_increment comment '自动生成的主键id',
-  systemId int comment '业务系统id',
-  month int comment '所在月',
-  money int comment '钱数',
-  year varchar(20) comment '年份',
-  index idx_systemId_month(systemId,month)
+  index idx_systemId_index_type(systemId,indexAt,typeVal)
 );
 
 
