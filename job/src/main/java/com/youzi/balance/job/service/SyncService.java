@@ -70,7 +70,6 @@ public class SyncService {
             } catch (Exception e) {
                 log.error("", e);
             }
-
         });
     }
 }

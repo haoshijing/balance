@@ -85,7 +85,7 @@ public class SyncDataJob {
         SystemTotalPo queryPo = new SystemTotalPo();
         queryPo.setSystemId(systemId);
         queryPo.setIndexAt(index);
-        queryPo.setTypeVal(1);
+        queryPo.setTypeVal(type);
         Integer count = systemTotalMapper.queryCount(queryPo);
         Integer money = payMapper.sumMoney(systemId,start.getMillis(),end.getMillis());
 
