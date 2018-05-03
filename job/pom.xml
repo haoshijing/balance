@@ -78,7 +78,7 @@
             <jvmArguments>
                 -Xdebug -Xnoagent -Djava.compiler=NONE -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8011
             </jvmArguments>
-            <mainClass>com.huanke.iot.api.ApiApplicationStarter</mainClass>
+            <mainClass>com.youzi.balance.job.ApplicationStarter</mainClass>
         </configuration>
         <executions>
             <execution>
