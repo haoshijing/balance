@@ -14,6 +14,7 @@ import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -38,10 +39,12 @@ public class SyncDataJob {
     private SystemTotalMapper systemTotalMapper;
 
 
-    @EventListener
-    public void init(ContextStartedEvent contextStartedEvent) {
+    @Scheduled(cron = "0 0 11 * * ?")
+    public void sync() {
         try {
+            log.info("开始同步");
             doWork();
+            log.info("同步结束");
         } catch (Exception e) {
             log.error("", e);
         }
@@ -95,7 +98,10 @@ public class SyncDataJob {
                     log.error("",e);
                 }
             });
+            doCalMonth(systemPo.getId());
+            doCalWeek(systemPo.getId());
         });
+
     }
 
     private void doCalWeek(Integer systemId){
