@@ -8,6 +8,7 @@ import com.yoyzi.balance.controller.request.SystemUpdatePo;
 import com.yoyzi.balance.service.PayService;
 import com.yoyzi.balance.service.SystemService;
 import com.yoyzi.balance.vo.PayVo;
+import com.yoyzi.balance.vo.SystemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,8 @@ public class SystemController {
     }
 
     @RequestMapping("/getAll")
-    public  List<SystemPo> getAll(){
-       return systemService.getAll();
+    public  ApiResponse<List<SystemPo>> getAll(){
+       List<SystemVo> systems = systemService.getAll();
+       return new ApiResponse(systems);
     }
 }

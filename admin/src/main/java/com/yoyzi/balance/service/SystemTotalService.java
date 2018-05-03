@@ -25,9 +25,11 @@ public class SystemTotalService {
 
     public List<SystemTotalVo> selectList(TotalQueryRequest request){
         SystemTotalPo systemTotalPo = new SystemTotalPo();
+
         systemTotalPo.setTypeVal(request.getType());
-        systemTotalPo.setIndexAt(request.getIndex());
         systemTotalPo.setSystemId(request.getSystemId());
+        systemTotalPo.setYearStr(request.getYear());
+        systemTotalPo.setIndexAt(request.getIndex());
 
         Integer limit = request.getLimit();
         Integer offset = (request.getPage() - 1)*limit;

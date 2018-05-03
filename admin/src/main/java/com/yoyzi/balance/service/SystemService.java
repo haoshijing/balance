@@ -6,10 +6,13 @@ import com.alibaba.druid.pool.DruidPooledConnection;
 import com.youzi.balance.base.mapper.impl.SystemMapper;
 import com.youzi.balance.base.po.SystemPo;
 import com.yoyzi.balance.controller.request.SystemUpdatePo;
+import com.yoyzi.balance.vo.SystemVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class SystemService {
@@ -56,7 +59,13 @@ public class SystemService {
 
     }
 
-    public List<SystemPo> getAll() {
-        return systemMapper.selectAll();
+    public List<SystemVo> getAll() {
+
+        List<SystemPo> systemPos =  systemMapper.selectAll();
+        return  systemPos.stream().map(systemPo -> {
+            SystemVo systemVo = new SystemVo();
+            BeanUtils.copyProperties(systemPo,systemVo);
+            return  systemVo;
+        }).collect(Collectors.toList());
     }
 }

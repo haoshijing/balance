@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/systemTotal")
+@RequestMapping("/total")
 @RestController
 public class SystemTotalController {
 

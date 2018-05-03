@@ -95,8 +95,6 @@ public class SyncDataJob {
                     log.error("",e);
                 }
             });
-            doCalWeek(systemPo.getId());
-            doCalMonth(systemPo.getId());
         });
     }
 
@@ -105,7 +103,7 @@ public class SyncDataJob {
         Integer week = dateTime.weekOfWeekyear().get();
         DateTime start = dateTime.withDayOfWeek(1).withTime(0,0,0,0);
         DateTime end = start.plusWeeks(1);
-        doCal(start,end,systemId,week,1);
+        doCal(start,end,systemId,1,week);
     }
 
     private void doCalMonth(Integer systemId){
@@ -113,7 +111,7 @@ public class SyncDataJob {
         Integer month = dateTime.monthOfYear().get();
         DateTime start = dateTime.withDayOfMonth(1).withTime(0,0,0,0);
         DateTime end = start.plusMonths(1);
-        doCal(start,end,systemId,month,2);
+        doCal(start,end,systemId,2,month);
 
     }
 

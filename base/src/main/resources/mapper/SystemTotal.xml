@@ -50,14 +50,18 @@
         select * from <include refid="tableName"/>
 
         <where>
+             1 = 1
             <if test = "param.systemId != null">
                 AND systemId = #{param.systemId}
             </if>
-            <if test = "param.index != null">
-                and index = #{param.index}
+            <if test = "param.indexAt != null">
+                and indexAt = #{param.indexAt}
             </if>
-            <if test = "param.type != null">
-                and type = #{param.type}
+            <if test = "param.typeVal != null">
+                and typeVal = #{param.typeVal}
+            </if>
+            <if test = "param.yearStr != null">
+                and yearStr = #{param.yearStr}
             </if>
             order by id desc
             limit #{limit} offset #{offset}
@@ -69,14 +73,18 @@
         select count(1)  from <include refid="tableName"/>
 
         <where>
+            1 = 1
             <if test = "param.systemId != null">
                 AND systemId = #{param.systemId}
             </if>
-            <if test = "param.index != null">
-                and index = #{param.index}
+            <if test = "param.indexAt != null">
+                and indexAt = #{param.indexAt}
             </if>
-            <if test = "param.type != null">
-                and type = #{param.type}
+            <if test = "param.typeVal != null">
+                and typeVal = #{param.typeVal}
+            </if>
+            <if test = "param.yearStr != null">
+                and yearStr = #{param.yearStr}
             </if>
         </where>
     </select>

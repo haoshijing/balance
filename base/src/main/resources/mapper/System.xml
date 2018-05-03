@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.youzi.balance.base.mapper.impl.SystemMapper">
     <sql id="all_columns">
-        *
+        id, name
     </sql>
     <sql id = "tableName">
         t_system
