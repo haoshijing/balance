@@ -75,9 +75,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-            <jvmArguments>
-                -Xdebug -Xnoagent -Djava.compiler=NONE -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8011
-            </jvmArguments>
             <mainClass>com.youzi.balance.job.ApplicationStarter</mainClass>
         </configuration>
         <executions>
