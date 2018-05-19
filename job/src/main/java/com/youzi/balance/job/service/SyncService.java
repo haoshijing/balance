@@ -40,7 +40,7 @@ public class SyncService {
                 systemPo.getDbHost(), systemPo.getDbName());
         dataSource.setUrl(url);
 
-        String sql = " select id, price , payType ,insertTime , payTime from t_order where orderStatus = 2 and payTime >= " + start
+        String sql = " select id, price , payType ,insertTime , payTime from t_order where orderStatus in(2,3) and insertTime >= " + start
                 + " and payTime <= " + end;
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

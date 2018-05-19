@@ -49,7 +49,11 @@ public class SystemTotalService {
             };
             systemTotalVo.setSystemName(systemMap.get(systemTotalPo1.getSystemId()));
             systemTotalVo.setYear(systemTotalPo1.getYearStr());
-            systemTotalVo.setMoney(systemTotalPo1.getMoney()/100+"元");
+            if(systemTotalPo1.getMoney() != null) {
+                systemTotalVo.setMoney(systemTotalPo1.getMoney() / 100 + "元");
+            }else{
+                systemTotalVo.setMoney( "0元");
+            }
             return systemTotalVo;
         }).collect(Collectors.toList());
     }

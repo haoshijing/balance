@@ -43,7 +43,7 @@ public class SyncDataJob {
     private SyncService syncService;
 
 
-    @Scheduled(cron = "0 */2 * * * ?")
+    @Scheduled(cron = "0 */20 * * * ?")
     public void sync() {
         try {
             log.info("开始同步");

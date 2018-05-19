@@ -40,6 +40,9 @@ create table t_system_total(
 insert into t_system(`name`,`dbHost`,`dbName`,`dbUserName`,`dbPassword`)
  values ('十三水','106.15.200.15' ,'sanshui','keke','123456');
 
+ insert into t_system(`name`,`dbHost`,`dbName`,`dbUserName`,`dbPassword`)
+ values ('闲娱狗','47.97.103.228' ,'xiangyg','keke','123456');
+
  drop TABLE IF EXISTS t_admin;
 create table t_admin
 (
@@ -54,7 +57,7 @@ status int1 comment '账号状态'
 
 Insert into t_admin(id,userName ,password ,saltPassword,insertTime,lastUpdateTime ,status)
 select
- null , 'admin','77d3b7ed9db7d236b9eac8262d27f6a5','123',  unix_timestamp()*1000, unix_timestamp()*1000,1;
+ null , 'admin','31fdfe289173007350752fa07d32cf78','123',  unix_timestamp()*1000, unix_timestamp()*1000,1;
 
 
 
