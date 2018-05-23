@@ -60,19 +60,20 @@ public class SyncDataJob {
         systemPoList.forEach(systemPo -> {
             syncService.syncData(systemPo,0);
             doCalMonth(systemPo.getId());
-            doCalWeek(systemPo.getId());
+            DateTime dateTime = new DateTime();
+            Integer week = dateTime.weekOfWeekyear().get();
+            doCalWeek(systemPo.getId(),week);
         });
     }
 
-    private void doCalWeek(Integer systemId){
+    public void doCalWeek(Integer systemId,int week){
         DateTime dateTime = new DateTime();
-        Integer week = dateTime.weekOfWeekyear().get();
-        DateTime start = dateTime.withDayOfWeek(1).withTime(0,0,0,0);
+        DateTime start = dateTime.withWeekOfWeekyear(week).withTime(0,0,0,0);
         DateTime end = start.plusWeeks(1);
         doCal(start,end,systemId,1,week);
     }
 
-    private void doCalMonth(Integer systemId){
+    public void doCalMonth(Integer systemId){
         DateTime dateTime = new DateTime();
         Integer month = dateTime.monthOfYear().get();
         DateTime start = dateTime.withDayOfMonth(1).withTime(0,0,0,0);

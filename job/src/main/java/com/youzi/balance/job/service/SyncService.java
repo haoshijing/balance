@@ -41,7 +41,7 @@ public class SyncService {
         dataSource.setUrl(url);
 
         String sql = " select id, price , payType ,insertTime , payTime from t_order where orderStatus in(2,3) and insertTime >= " + start
-                + " and payTime <= " + end;
+                + " and insertTime <= " + end;
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<PayPo> payPos = jdbcTemplate.query(sql, new RowMapper<PayPo>() {
@@ -50,7 +50,7 @@ public class SyncService {
                 PayPo payPo = new PayPo();
                 payPo.setSystemId(systemPo.getId());
                 payPo.setInsertTime(rs.getLong("insertTime"));
-                payPo.setPayTime(rs.getLong("payTime"));
+                payPo.setPayTime(rs.getLong("insertTime"));
                 payPo.setSyncTime(System.currentTimeMillis());
                 payPo.setMoney(rs.getInt("price"));
                 payPo.setPayType(rs.getString("payType"));
