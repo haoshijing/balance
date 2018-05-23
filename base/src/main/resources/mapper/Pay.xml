@@ -43,7 +43,9 @@
         select sum(money) from <include refid="tableName" />
 
         where payTime BETWEEN #{start} AND  #{end}
-        and systemId = #{systemId}
+        <if test = "systemId != null">
+          and systemId = #{systemId}
+        </if>
      </select>
 
     <select id="selectPageList" resultType="com.youzi.balance.base.po.query.QueryPayPo">
