@@ -70,7 +70,6 @@ public class PayService {
     public Integer selectCount(PayQueryRequest request){
         Integer systemId = request.getSystemId();
 
-
         Long start = request.getStart();
         Long end = request.getEnd();
         QueryPayPo queryPayPo = new QueryPayPo();
@@ -79,5 +78,17 @@ public class PayService {
         queryPayPo.setSystemId(systemId);
         return payMapper.selectPageCount(queryPayPo);
 
+    }
+
+    public Integer selectAmount(PayQueryRequest request) {
+        Integer systemId = request.getSystemId();
+
+        Long start = request.getStart();
+        Long end = request.getEnd();
+        QueryPayPo queryPayPo = new QueryPayPo();
+        queryPayPo.setStart(start);
+        queryPayPo.setEnd(end);
+        queryPayPo.setSystemId(systemId);
+        return payMapper.sumMoney(systemId,start,end);
     }
 }

@@ -21,4 +21,5 @@ public interface PayMapper extends BaseMapper<PayPo> {
 
     Integer selectPageCount(QueryPayPo queryPayPo);
 
+    Integer selectAmount(QueryPayPo queryPayPo);
 }
