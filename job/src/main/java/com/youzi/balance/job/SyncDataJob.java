@@ -68,7 +68,7 @@ public class SyncDataJob {
 
     public void doCalWeek(Integer systemId,int week){
         DateTime dateTime = new DateTime();
-        DateTime start = dateTime.withWeekOfWeekyear(week).withTime(0,0,0,0);
+        DateTime start = dateTime.withWeekOfWeekyear(week).withDayOfWeek(1).withTime(0,0,0,0);
         DateTime end = start.plusWeeks(1);
         doCal(start,end,systemId,1,week);
     }
