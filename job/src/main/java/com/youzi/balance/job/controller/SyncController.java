@@ -41,10 +41,10 @@ public class SyncController {
     @RequestMapping("/index")
     public String syncHistory(Integer days) {
         systemMapper.selectAll().forEach(systemPo -> {
-            syncDataJob.doCalWeek(systemPo.getId(), 18);
-            syncDataJob.doCalWeek(systemPo.getId(), 19);
-            syncDataJob.doCalWeek(systemPo.getId(), 20);
+            syncData(systemPo,10);
             syncDataJob.doCalWeek(systemPo.getId(), 21);
+            syncDataJob.doCalWeek(systemPo.getId(), 22);
+            syncDataJob.doCalWeek(systemPo.getId(), 23);
         });
         return "ok";
     }

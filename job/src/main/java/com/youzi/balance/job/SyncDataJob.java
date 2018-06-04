@@ -18,8 +18,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -61,6 +59,7 @@ public class SyncDataJob {
             syncService.syncData(systemPo,0);
             doCalMonth(systemPo.getId());
             DateTime dateTime = new DateTime();
+            dateTime = dateTime.withDayOfWeek(1);
             Integer week = dateTime.weekOfWeekyear().get();
             doCalWeek(systemPo.getId(),week);
         });
