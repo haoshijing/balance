@@ -28,6 +28,14 @@ public class SyncService {
     private PayMapper payMapper;
 
     public void syncData(SystemPo systemPo, int day) {
+        try{
+            doSyncData(systemPo,day);
+        }catch (Exception e){
+            log.error("",e);
+        }
+    }
+
+    private void doSyncData(SystemPo systemPo, int day){
         DateTime dateTime = new DateTime();
         dateTime = dateTime.plusDays(day).withMillisOfSecond(0).withSecondOfMinute(0).withMinuteOfHour(0).withHourOfDay(0);
         Long end = dateTime.getMillis();
