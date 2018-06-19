@@ -41,10 +41,7 @@ public class SyncController {
     @RequestMapping("/index")
     public String syncHistory(Integer days) {
         systemMapper.selectAll().forEach(systemPo -> {
-            syncData(systemPo,10);
-            syncDataJob.doCalWeek(systemPo.getId(), 21);
-            syncDataJob.doCalWeek(systemPo.getId(), 22);
-            syncDataJob.doCalWeek(systemPo.getId(), 23);
+            syncData(systemPo,0);
         });
         return "ok";
     }
@@ -52,7 +49,7 @@ public class SyncController {
     private void syncData( SystemPo systemPo ,int days ){
         List<Future> futureList = Lists.newArrayList();
         if (systemPo != null) {
-            for (int idx = 0; idx < days; idx++) {
+            for (int idx = 0; idx < days+1; idx++) {
                 final int day = idx;
                 Future f = defaultEventExecutorGroup.submit(new Runnable() {
                     @Override
