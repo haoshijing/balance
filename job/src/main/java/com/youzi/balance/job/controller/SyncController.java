@@ -13,9 +13,8 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,9 +38,14 @@ public class SyncController {
     private SyncService syncService;
 
     @RequestMapping("/index")
+    @ResponseBody
     public String syncHistory(Integer days) {
         systemMapper.selectAll().forEach(systemPo -> {
-            syncData(systemPo,0);
+            syncData(systemPo, 10);
+            syncDataJob.doCalWeek(systemPo.getId(), 24);
+            syncDataJob.doCalWeek(systemPo.getId(), 25);
+            syncDataJob.doCalWeek(systemPo.getId(), 26);
+
         });
         return "ok";
     }

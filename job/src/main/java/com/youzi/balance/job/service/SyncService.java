@@ -44,6 +44,7 @@ public class SyncService {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUsername(systemPo.getDbUserName());
         dataSource.setPassword(systemPo.getDbPassword());
+        dataSource.setMaxWait(60000);
         String url = String.format("jdbc:mysql://%s/%s?useSSL=false&useUnicode=true&characterEncoding=UTF-8&zer",
                 systemPo.getDbHost(), systemPo.getDbName());
         dataSource.setUrl(url);
