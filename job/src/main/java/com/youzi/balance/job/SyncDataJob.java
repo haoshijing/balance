@@ -56,7 +56,7 @@ public class SyncDataJob {
     public void doWork() {
         List<SystemPo> systemPoList = systemMapper.selectAll();
         systemPoList.forEach(systemPo -> {
-            syncService.syncData(systemPo,0);
+            syncService.syncData(systemPo,1);
             doCalMonth(systemPo.getId());
             DateTime dateTime = new DateTime();
             dateTime = dateTime.withDayOfWeek(1);
