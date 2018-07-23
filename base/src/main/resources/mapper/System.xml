@@ -12,6 +12,7 @@
         <!-- 具体的sql -->
         SELECT <include refid="all_columns"/> FROM
         <include refid="tableName"/>
+        where status = 1
 
     </select>
 

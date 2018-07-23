@@ -25,6 +25,9 @@ create table t_system(
 
 );
 
+
+alter table t_system add COLUMN status DECIMAL '1';
+
 drop TABLE IF EXISTS t_system_total;
 create table t_system_total(
   id int primary key auto_increment comment '自动生成的主键id',

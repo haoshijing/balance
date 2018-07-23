@@ -41,10 +41,11 @@ public class SyncController {
     @ResponseBody
     public String syncHistory(Integer days) {
         systemMapper.selectAll().forEach(systemPo -> {
-            syncData(systemPo, 10);
-            syncDataJob.doCalWeek(systemPo.getId(), 24);
-            syncDataJob.doCalWeek(systemPo.getId(), 25);
-            syncDataJob.doCalWeek(systemPo.getId(), 26);
+           // syncData(systemPo, days);
+
+            syncDataJob.doCalMonth(1);
+
+
 
         });
         return "ok";

@@ -14,4 +14,5 @@ public class SystemPo {
     private String dbName;
     private String dbUserName;
     private String dbPassword;
+    private Integer status;
 }

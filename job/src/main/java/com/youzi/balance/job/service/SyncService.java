@@ -80,5 +80,6 @@ public class SyncService {
                 log.error("", e);
             }
         });
+        dataSource.close();
     }
 }
